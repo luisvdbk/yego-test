@@ -7,7 +7,7 @@ use App\Models\Vehicle;
 use App\Repositories\VehicleRepository;
 use Illuminate\Console\Command;
 
-class SyncVehicles extends Command
+class SyncVehiclesCommand extends Command
 {
     /**
      * The name and signature of the console command.

@@ -2,12 +2,9 @@
 
 namespace Tests\Feature\Models;
 
-use App\Actions\CalculateDistanceBetweenCoordinatesAction;
 use App\Models\Ride;
 use App\Models\Vehicle;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Mockery\MockInterface;
 use Tests\TestCase;
 
 class VehicleTest extends TestCase

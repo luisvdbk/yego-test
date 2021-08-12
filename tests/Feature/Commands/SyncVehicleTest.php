@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\Commands;
 
-use App\Console\Commands\SyncVehicles;
+use App\Console\Commands\SyncVehiclesCommand;
 use App\Models\Vehicle;
 use App\Repositories\Fake\FakeVehicleRepository;
 use App\Repositories\VehicleRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SyncVehicleTest extends TestCase
@@ -32,7 +31,7 @@ class SyncVehicleTest extends TestCase
             "type" => 0,
         ]);
 
-        $this->artisan(SyncVehicles::class);
+        $this->artisan(SyncVehiclesCommand::class);
     
         $vehiclesById = Vehicle::all()->keyBy('id');
 
