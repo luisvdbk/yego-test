@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ride;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        collect()->times(5)->each(function (int $i) {
+            Ride::factory()->times(rand(10, 100))->create([
+                'created_at' => now()->subDays($i),
+            ]);
+        });
     }
 }
