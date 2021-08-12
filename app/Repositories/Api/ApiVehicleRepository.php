@@ -15,7 +15,6 @@ class ApiVehicleRepository extends YegoApiRepository implements VehicleRepositor
             ->retry(3, 100)
             ->get('/vehicles')
             ->throw()->json();
-
         
         return VehicleCollection::fromApi($vehiclesData);
     }

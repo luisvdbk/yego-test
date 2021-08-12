@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\DataTransferObjects\Vehicle as VehicleDto;
+use App\Models\Vehicle;
 use App\Repositories\VehicleRepository;
 use Illuminate\Console\Command;
 
@@ -39,6 +41,19 @@ class SyncVehicles extends Command
     public function handle(VehicleRepository $vehicleRepository)
     {
         $vehicles = $vehicleRepository->all();
+
+        $vehicles->each(function (VehicleDto $vehicleDto) {
+            Vehicle::updateOrCreate(
+                ['id' => $vehicleDto->id],
+                [
+                    'name' => $vehicleDto->name,
+                    'lat' => $vehicleDto->lat,
+                    'lng' => $vehicleDto->lng,
+                    'battery' => $vehicleDto->battery,
+                    'type' => $vehicleDto->type,
+                ]
+            );
+        });
 
         return 0;
     }
