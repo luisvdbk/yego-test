@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'api_url' => 'https://www.rideyego.com/api/v1/city/1',
-    'api_token' => '8ugk4T1i2lr7qP51QkkGmmwoETzaB5Rabklgvk8pV1reyr9SZI9aHXKom2d8',
+    'api_url' => env('YEGO_API_URL'),
+    'api_token' => env('YEGO_API_KEY'),
 ];
