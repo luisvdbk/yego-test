@@ -17,7 +17,7 @@ class CreateVehiclesTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('lat', 8, 6);
-            $table->decimal('lng', 8, 6);
+            $table->decimal('lng', 9, 6);
             $table->integer('battery');
             $table->integer('type');
             $table->timestamps();

@@ -22,12 +22,12 @@ class VehicleFactory extends Factory
     public function definition()
     {
         return [
-            'id' => $this->faker->randomNumber,
-            'name' => $this->faker->name,
-            'lat' => $this->faker->latitude,
-            'lng' => $this->faker->longitude,
-            'battery' => $this->faker->randomNumber,
-            'type' => $this->faker->randomNumber,
+            'id' => $this->faker->unique()->randomNumber(),
+            'name' => $this->faker->name(),
+            'lat' => $this->faker->latitude(),
+            'lng' => $this->faker->longitude(),
+            'battery' => $this->faker->randomNumber(),
+            'type' => $this->faker->randomNumber(),
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Ride;
 use App\Models\Vehicle;
+use App\Observers\RideObserver;
 use App\Observers\VehicleObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
