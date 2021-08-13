@@ -12,8 +12,13 @@ class Vehicle extends Model
 
     public $incrementing = false;
 
-    protected $keyType = 'integer';
-    
+    /**
+     * @var string
+     * 
+     * Distance between rides in meters
+     */
+    const DISTANCE_BETWEEN_RIDES = 60;
+
     /**
      * Distance between the vehicle position and given position in meters
      */
