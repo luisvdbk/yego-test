@@ -23,7 +23,7 @@ class SyncVehicleTest extends TestCase
             "lat" => 45.376497,
             "lng" => 5.139018,
             "battery" => 63,
-            "type" => 1,
+            "type" => 2,
         ]);
 
         $this->artisan(SyncVehiclesCommand::class)->assertExitCode(0);
