@@ -16,16 +16,16 @@ class DisplayRidesStatsCommand extends Command
      *
      * @var string
      */
-    protected $signature = "rides:display-stats 
-                            {date? : displays the number of rides done each day from this date, should be in Y-m-d format}
-                            {--H|hourly : display the number of rides by hour rather than by day}";
+    protected $signature = 'rides:display-stats 
+                            {--H|hourly : display the number of rides by hour rather than by day}
+                            {date? : If used with hourly option, displays rides by hour for this date. Otherwise, displays the number of rides done each day from this date. Should be in Y-m-d format}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Displays stats from rides in different formats';
+    protected $description = 'Displays rides stats in different daily or hourly';
 
     /**
      * Create a new command instance.
