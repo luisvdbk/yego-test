@@ -33,7 +33,8 @@ class DisplayRidesStatsTest extends TestCase
                 [$dayA->toDateString(), 1],
                 [$dayB->toDateString(), 2],
                 [$dayC->toDateString(), 3],
-            ]);
+            ])
+            ->assertExitCode(0);
     }
 
     public function testIfDateSuppliedOnlyRidesFromThatDayOnAreShown()
@@ -57,7 +58,8 @@ class DisplayRidesStatsTest extends TestCase
             ], [
                 [$dayB->toDateString(), 2],
                 [$dayC->toDateString(), 3],
-            ]);
+            ])
+            ->assertExitCode(0);
     }
 
     public function testIfProvidedDateMustBeValid()
@@ -105,7 +107,8 @@ class DisplayRidesStatsTest extends TestCase
                 [10, 3],
                 [11, 2],
                 [12, 2],
-            ]);
+            ])
+            ->assertExitCode(0);
     }
 
     public function testIfHourlyOptionAndDateArgumentSuppliedDisplaysNumberOfRidesPerHourOnGivenDate()
@@ -146,6 +149,7 @@ class DisplayRidesStatsTest extends TestCase
                 [10, 1],
                 [11, 1],
                 [12, 2],
-            ]);
+            ])
+            ->assertExitCode(0);
     }
 }
