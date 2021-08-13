@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Ride;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/rides', function () {
+    return view('rides.index', [
+        'rides' => Ride::with('vehicle')->latest()->paginate(100),
+    ]);
 });
