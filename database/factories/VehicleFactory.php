@@ -22,7 +22,7 @@ class VehicleFactory extends Factory
     public function definition()
     {
         return [
-            'id' => $this->faker->unique()->randomNumber(),
+            'id' => $this->faker->unique()->numberBetween(1),
             'name' => $this->faker->name(),
             'lat' => $this->faker->latitude(),
             'lng' => $this->faker->longitude(),

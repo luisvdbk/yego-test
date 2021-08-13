@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -17,7 +16,8 @@ class DisplayRidesStatsCommand extends Command
      * @var string
      */
     protected $signature = 'rides:display-stats 
-                            {date? : displays the number of rides done each day from this date}';
+                            {date? : displays the number of rides done each day from this date}
+                            {--H|hourly : display the number of rides by hour rather than by day}';
 
     /**
      * The console command description.
@@ -44,24 +44,47 @@ class DisplayRidesStatsCommand extends Command
     public function handle()
     {
         try {
-            $byDay = DB::table('rides')
+            $this->option('hourly') ? $this->displayHourly() : $this->displayDaily();
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+            return 1;
+        }
+
+        return 0;
+    }
+
+    protected function displayHourly()
+    {
+        $byHour = DB::table('rides')
+                ->select(DB::raw('HOUR(created_at) as hour, COUNT(*) as total'))
+                ->groupBy('hour')
+                ->orderBy('hour')
+                ->when($this->getDate(), function (Builder $query, $date) {
+                    return $query->whereRaw('DATE(created_at) = ?', [$date]);
+                })
+                ->get();
+
+        $this->table(
+            ['Hour', 'Number of Rides'],
+            $this->asArrayForTable($byHour)
+        );
+    }
+
+    protected function displayDaily()
+    {
+        $byDay = DB::table('rides')
                 ->select(DB::raw('DATE(created_at) as day, COUNT(*) as total'))
                 ->groupBy('day')
                 ->orderBy('day')
                 ->when($this->getDate(), function (Builder $query, $date) {
                     return $query->where('created_at', '>=', $date);
                 })
-                ->get();    
-        } catch (\Exception $e) {
-            return 1;
-        }
+                ->get();
 
         $this->table(
             ['Date', 'Number of Rides'],
             $this->asArrayForTable($byDay)
         );
-
-        return 0;
     }
 
     protected function getDate(): ?string
@@ -76,9 +99,7 @@ class DisplayRidesStatsCommand extends Command
         );
 
         if ($validator->fails()) {
-            $this->error($validator->errors()->first('date'));
-
-            throw new Exception('Date validation failed');
+            throw new \Exception($validator->errors()->first('date'));
         }
 
         return $date;

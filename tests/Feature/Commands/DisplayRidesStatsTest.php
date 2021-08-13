@@ -66,4 +66,45 @@ class DisplayRidesStatsTest extends TestCase
             ->expectsOutput('The date does not match the format Y-m-d.')
             ->assertExitCode(1);
     }
+
+    public function testIfOnlyHArgumentSuppliedDisplaysNumberOfRidesPerHour()
+    {
+        Ride::factory()->count(1)->create([
+            'created_at' => now()->subDay()->setHour(10),
+        ]);
+
+        Ride::factory()->count(1)->create([
+            'created_at' => now()->subDays(2)->setHour(10),
+        ]);
+
+        Ride::factory()->count(1)->create([
+            'created_at' => now()->subDays(3)->setHour(11),
+        ]);
+
+        Ride::factory()->count(1)->create([
+            'created_at' => now()->subDays(4)->setHour(12),
+        ]);
+
+        Ride::factory()->count(1)->create([
+            'created_at' => now()->subDays(5)->setHour(10),
+        ]);
+
+        Ride::factory()->count(1)->create([
+            'created_at' => now()->subDays(5)->setHour(11),
+        ]);
+
+        Ride::factory()->count(1)->create([
+            'created_at' => now()->subDays(5)->setHour(12),
+        ]);
+
+        $this->artisan(DisplayRidesStatsCommand::class, ['--hourly' => true])
+            ->expectsTable([
+                'Hour',
+                'Number of Rides',
+            ], [
+                [10, 3],
+                [11, 2],
+                [12, 2],
+            ]);
+    }
 }

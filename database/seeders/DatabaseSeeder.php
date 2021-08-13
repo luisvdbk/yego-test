@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Ride;
+use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,10 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        collect()->times(5)->each(function (int $i) {
-            Ride::factory()->times(rand(10, 100))->create([
-                'created_at' => now()->subDays($i),
+        Schema::disableForeignKeyConstraints();
+
+        Vehicle::truncate();
+        Ride::truncate();
+
+        collect()->times(1000)->each(function () {
+            Ride::factory()->create([
+                'created_at' => now()->subDays(rand(1, 5))->setHour(rand(0, 24)),
             ]);
         });
+        
+        Schema::enableForeignKeyConstraints();
     }
 }
