@@ -1,6 +1,6 @@
 # Yego test
 
-## Installation
+### Installation
 - Clone the repo
 - `cd` to the project folder
 - Run `composer install`
