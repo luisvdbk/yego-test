@@ -67,33 +67,33 @@ class DisplayRidesStatsTest extends TestCase
             ->assertExitCode(1);
     }
 
-    public function testIfOnlyHArgumentSuppliedDisplaysNumberOfRidesPerHour()
+    public function testIfOnlyHourlyOptionSuppliedDisplaysNumberOfRidesPerHour()
     {
-        Ride::factory()->count(1)->create([
+        Ride::factory()->create([
             'created_at' => now()->subDay()->setHour(10),
         ]);
 
-        Ride::factory()->count(1)->create([
+        Ride::factory()->create([
             'created_at' => now()->subDays(2)->setHour(10),
         ]);
 
-        Ride::factory()->count(1)->create([
+        Ride::factory()->create([
             'created_at' => now()->subDays(3)->setHour(11),
         ]);
 
-        Ride::factory()->count(1)->create([
+        Ride::factory()->create([
             'created_at' => now()->subDays(4)->setHour(12),
         ]);
 
-        Ride::factory()->count(1)->create([
+        Ride::factory()->create([
             'created_at' => now()->subDays(5)->setHour(10),
         ]);
 
-        Ride::factory()->count(1)->create([
+        Ride::factory()->create([
             'created_at' => now()->subDays(5)->setHour(11),
         ]);
 
-        Ride::factory()->count(1)->create([
+        Ride::factory()->create([
             'created_at' => now()->subDays(5)->setHour(12),
         ]);
 
@@ -104,6 +104,47 @@ class DisplayRidesStatsTest extends TestCase
             ], [
                 [10, 3],
                 [11, 2],
+                [12, 2],
+            ]);
+    }
+
+    public function testIfHourlyOptionAndDateArgumentSuppliedDisplaysNumberOfRidesPerHourOnGivenDate()
+    {
+        Ride::factory()->create([
+            'created_at' => now()->subDay()->setHour(10),
+        ]);
+
+        Ride::factory()->create([
+            'created_at' => now()->subDays(2)->setHour(10),
+        ]);
+
+        Ride::factory()->create([
+            'created_at' => $date = now()->subDays(3)->setHour(10),
+        ]);
+
+        Ride::factory()->create([
+            'created_at' => now()->subDays(3)->setHour(11),
+        ]);
+
+        Ride::factory()->create([
+            'created_at' => now()->subDays(3)->setHour(12),
+        ]);
+
+        Ride::factory()->create([
+            'created_at' => now()->subDays(3)->setHour(12),
+        ]);
+
+        Ride::factory()->create([
+            'created_at' => now()->subDays(4)->setHour(12),
+        ]);
+
+        $this->artisan(DisplayRidesStatsCommand::class, ['date' => $date->format('Y-m-d'), '--hourly' => true])
+            ->expectsTable([
+                'Hour',
+                'Number of Rides',
+            ], [
+                [10, 1],
+                [11, 1],
                 [12, 2],
             ]);
     }

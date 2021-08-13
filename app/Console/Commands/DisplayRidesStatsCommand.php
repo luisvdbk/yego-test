@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -15,9 +16,9 @@ class DisplayRidesStatsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rides:display-stats 
-                            {date? : displays the number of rides done each day from this date}
-                            {--H|hourly : display the number of rides by hour rather than by day}';
+    protected $signature = "rides:display-stats 
+                            {date? : displays the number of rides done each day from this date, should be in Y-m-d format}
+                            {--H|hourly : display the number of rides by hour rather than by day}";
 
     /**
      * The console command description.
