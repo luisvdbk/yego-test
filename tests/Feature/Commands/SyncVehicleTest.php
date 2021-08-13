@@ -28,7 +28,7 @@ class SyncVehicleTest extends TestCase
             "lat" => 45.376497,
             "lng" => 5.139018,
             "battery" => 63,
-            "type" => 0,
+            "type" => 1,
         ]);
 
         $this->artisan(SyncVehiclesCommand::class);
@@ -43,7 +43,7 @@ class SyncVehicleTest extends TestCase
         $this->assertEquals(41.376497, $vehicleA->lat);
         $this->assertEquals(2.139018, $vehicleA->lng);
         $this->assertEquals(63, $vehicleA->battery);
-        $this->assertEquals(0, $vehicleA->type);
+        $this->assertEquals(1, $vehicleA->type);
 
         $vehicleB = $vehiclesById[1639];
         
@@ -51,7 +51,7 @@ class SyncVehicleTest extends TestCase
         $this->assertEquals(41.394477, $vehicleB->lat);
         $this->assertEquals(2.112885, $vehicleB->lng);
         $this->assertEquals(93, $vehicleB->battery);
-        $this->assertEquals(0, $vehicleB->type);
+        $this->assertEquals(2, $vehicleB->type);
 
         $vehicleC = $vehiclesById[1637];
         
@@ -59,6 +59,6 @@ class SyncVehicleTest extends TestCase
         $this->assertEquals(41.35997, $vehicleC->lat);
         $this->assertEquals(2.133238, $vehicleC->lng);
         $this->assertEquals(87, $vehicleC->battery);
-        $this->assertEquals(0, $vehicleC->type);
+        $this->assertEquals(3, $vehicleC->type);
     }
 }
