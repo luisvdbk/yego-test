@@ -23,4 +23,5 @@ The command `php artisan rides:display-stats` can be used to display rides-relat
 If you need some test data to check this command you can run `php artisan migrate:refresh --seed`
 
 ### Tests
+Run `php artisan migrate --env=testing`
 Run `php artisan test`

@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Actions\CalculateDistanceBetweenCoordinatesAction;
 use App\Models\Ride;
 use App\Models\Vehicle;
 
