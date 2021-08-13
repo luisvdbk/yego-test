@@ -40,7 +40,12 @@ class SyncVehiclesCommand extends Command
      */
     public function handle(VehicleRepository $vehicleRepository)
     {
-        $vehicles = $vehicleRepository->all();
+        try {
+            $vehicles = $vehicleRepository->all();
+        } catch (\Exception $e) {
+            $this->error('There was an error trying to get vehicles data. Please, try again later.');
+            return 1;
+        }
 
         $vehicles->each(function (VehicleDto $vehicleDto) {
             Vehicle::updateOrCreate(

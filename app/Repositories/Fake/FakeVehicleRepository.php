@@ -7,8 +7,14 @@ use App\Repositories\VehicleRepository;
 
 class FakeVehicleRepository implements VehicleRepository
 {
+    protected bool $throwsException = false;
+
     public function all(): VehicleCollection
     {
+        if ($this->throwsException) {
+            throw new \Exception('Error while trying to get vehicles');
+        }
+
         $fakeData = [
             [
                 "id" => 1640,
@@ -37,5 +43,12 @@ class FakeVehicleRepository implements VehicleRepository
         ];
 
         return VehicleCollection::fromApi($fakeData); 
+    }
+
+    public function throws(): static
+    {
+        $this->throwsException = true;
+
+        return $this;
     }
 }

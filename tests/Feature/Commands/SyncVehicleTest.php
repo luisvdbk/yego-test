@@ -12,16 +12,11 @@ use Tests\TestCase;
 class SyncVehicleTest extends TestCase
 {
     use RefreshDatabase;
-    
-    protected function setUp(): void
-    {
-        parent::setUp();
-        
-        $this->app->bind(VehicleRepository::class, FakeVehicleRepository::class);
-    }
 
     public function testItCreatesNewVehiclesAndUpdatesExistentOnes()
     {
+        $this->app->bind(VehicleRepository::class, FakeVehicleRepository::class);
+
         $existentVehicle = Vehicle::factory()->create([
             "id" => 1640,
             "name" => "Susi",
@@ -31,7 +26,7 @@ class SyncVehicleTest extends TestCase
             "type" => 1,
         ]);
 
-        $this->artisan(SyncVehiclesCommand::class);
+        $this->artisan(SyncVehiclesCommand::class)->assertExitCode(0);
     
         $vehiclesById = Vehicle::all()->keyBy('id');
 
@@ -60,5 +55,14 @@ class SyncVehicleTest extends TestCase
         $this->assertEquals(2.133238, $vehicleC->lng);
         $this->assertEquals(87, $vehicleC->battery);
         $this->assertEquals(3, $vehicleC->type);
+    }
+
+    public function testInCaseOfAnExceptionAMessageIsShown()
+    {
+        $this->app->instance(VehicleRepository::class, (new FakeVehicleRepository)->throws());
+
+        $this->artisan(SyncVehiclesCommand::class)
+            ->expectsOutput('There was an error trying to get vehicles data. Please, try again later.')
+            ->assertExitCode(1);
     }
 }
