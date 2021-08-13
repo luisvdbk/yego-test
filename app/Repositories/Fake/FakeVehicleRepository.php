@@ -16,7 +16,7 @@ class FakeVehicleRepository implements VehicleRepository
                 "lat" => 41.376497,
                 "lng" => 2.139018,
                 "battery" => 63,
-                "type" => 0,
+                "type" => 1,
             ],
             [
                 "id" => 1639,
@@ -24,7 +24,7 @@ class FakeVehicleRepository implements VehicleRepository
                 "lat" => 41.394477,
                 "lng" => 2.112885,
                 "battery" => 93,
-                "type" => 0,
+                "type" => 2,
             ],
             [ 
                 "id" => 1637,
@@ -32,7 +32,7 @@ class FakeVehicleRepository implements VehicleRepository
                 "lat" => 41.35997,
                 "lng" => 2.133238,
                 "battery" => 87,
-                "type" => 0,
+                "type" => 3,
             ],
         ];
 
